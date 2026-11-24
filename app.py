@@ -318,6 +318,6 @@ init_db()
 if __name__ == "__main__":
 
     app.run(
-        host="0.0.0.0",
+        host="192.168.77.0",
         port=5000,
     )
