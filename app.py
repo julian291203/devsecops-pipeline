@@ -27,19 +27,16 @@ app = Flask(__name__)
 
 app.config["SECRET_KEY"] = os.environ.get(
     "SECRET_KEY",
-    "dev-only-change-this-secret-key"
+    "devsecops-secret-key-change-this"
 )
 
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 
-# Aktifkan CSRF protection
 csrf = CSRFProtect(app)
 
-DATABASE = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)),
-    "users.db"
-)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATABASE = os.path.join(BASE_DIR, "users.db")
 
 
 # ==========================================
@@ -54,7 +51,7 @@ def get_db_connection():
 
 
 def init_db():
-    """Membuat tabel pengguna dan akun admin awal."""
+    """Inisialisasi database dan akun admin awal."""
 
     conn = get_db_connection()
 
@@ -71,7 +68,7 @@ def init_db():
             ("admin",)
         ).fetchone()
 
-        if not admin:
+        if admin is None:
             conn.execute(
                 """
                 INSERT INTO users (username, password)
@@ -90,12 +87,12 @@ def init_db():
 
 
 # ==========================================
-# ERROR HANDLING
+# CSRF ERROR HANDLING
 # ==========================================
 
 @app.errorhandler(CSRFError)
 def handle_csrf_error(error):
-    """Menangani kesalahan validasi CSRF."""
+    """Menangani kegagalan validasi CSRF."""
 
     app.logger.warning(
         "CSRF validation failed: %s",
@@ -109,33 +106,13 @@ def handle_csrf_error(error):
     ), 400
 
 
-@app.errorhandler(404)
-def page_not_found(error):
-    return render_template(
-        "error.html",
-        error_code=404,
-        error_message="Halaman yang kamu cari tidak ditemukan."
-    ), 404
-
-
-@app.errorhandler(500)
-def internal_server_error(error):
-    app.logger.exception("Internal server error")
-
-    return render_template(
-        "error.html",
-        error_code=500,
-        error_message="Terjadi kesalahan pada server."
-    ), 500
-
-
 # ==========================================
 # LOGIN
 # ==========================================
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    """Halaman autentikasi pengguna."""
+    """Halaman login pengguna."""
 
     if request.method == "POST":
 
@@ -153,7 +130,7 @@ def index():
                 "danger"
             )
 
-            return render_template("index.html"), 400
+            return redirect(url_for("index"))
 
         conn = get_db_connection()
 
@@ -174,9 +151,7 @@ def index():
             user["password"],
             password
         ):
-
             session.clear()
-
             session["username"] = user["username"]
 
             return redirect(url_for("dashboard"))
@@ -186,7 +161,7 @@ def index():
             "danger"
         )
 
-        return render_template("index.html"), 200
+        return redirect(url_for("index"))
 
     return render_template("index.html")
 
@@ -309,12 +284,19 @@ def logout():
 
 
 # ==========================================
-# APPLICATION STARTUP
+# DATABASE INITIALIZATION
 # ==========================================
 
 init_db()
 
 
-if __name__ == "__main__":
+# ==========================================
+# APPLICATION ENTRY POINT
+# ==========================================
 
-    app.run(host="0.0.0.0",port=5000,)
+if __name__ == "__main__":
+    app.run(
+        host="0.0.0.0",
+        port=5000,
+        debug=False
+    )
