@@ -1,292 +1,181 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sistem Login Aman</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Secure Portal</title>
 
     <style>
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                Roboto, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: Arial, sans-serif;
             min-height: 100vh;
-            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f172a, #1e40af);
             padding: 20px;
-            background: linear-gradient(135deg, #e8f0ff, #f4f6f8);
         }
 
-        .card {
-            background: #ffffff;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        .login-container {
             width: 100%;
-            max-width: 380px;
+            max-width: 400px;
+            background: white;
+            padding: 35px;
+            border-radius: 14px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
         }
 
-        .logo {
+        h1 {
             text-align: center;
-            font-size: 2.5rem;
+            color: #0f172a;
             margin-bottom: 10px;
-        }
-
-        h2 {
-            margin-top: 0;
-            margin-bottom: 8px;
-            text-align: center;
-            color: #333;
         }
 
         .subtitle {
             text-align: center;
-            color: #888;
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.2rem;
+            color: #64748b;
+            margin-bottom: 25px;
+            font-size: 14px;
         }
 
         label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #555;
+            margin: 15px 0 7px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #334155;
         }
 
-        input[type="text"],
-        input[type="password"] {
+        input {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 0.95rem;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 14px;
             outline: none;
-            transition: border 0.2s;
         }
 
         input:focus {
-            border-color: #0066cc;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
         }
 
-        .password-wrapper {
-            position: relative;
-        }
-
-        .password-wrapper input {
-            padding-right: 65px;
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            border: none;
-            background: none;
-            color: #0066cc;
-            cursor: pointer;
-            font-size: 0.8rem;
-            width: auto;
-            padding: 5px;
-        }
-
-        .options {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1.3rem;
-            font-size: 0.85rem;
-        }
-
-        .remember {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: #666;
-        }
-
-        button.login-button {
+        button {
             width: 100%;
-            padding: 0.85rem;
-            background-color: #0066cc;
+            padding: 13px;
+            margin-top: 22px;
+            background: #2563eb;
             color: white;
             border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
+            border-radius: 7px;
+            font-weight: bold;
             cursor: pointer;
             transition: background 0.2s;
         }
 
-        button.login-button:hover {
-            background-color: #0052a3;
+        button:hover {
+            background: #1d4ed8;
         }
 
         .alert {
-            padding: 0.8rem;
+            padding: 11px;
             border-radius: 6px;
-            margin-bottom: 1rem;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .success {
-            background-color: #d4edda;
-            color: #155724;
+            margin-bottom: 15px;
+            font-size: 13px;
         }
 
         .danger {
-            background-color: #f8d7da;
-            color: #721c24;
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
         }
 
         .register-link {
             text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-            color: #666;
+            margin-top: 22px;
+            font-size: 14px;
+            color: #64748b;
         }
 
         .register-link a {
-            color: #0066cc;
-            font-weight: bold;
+            color: #2563eb;
             text-decoration: none;
-        }
-
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-
-        .divider {
-            border-top: 1px solid #eee;
-            margin: 1.5rem 0 1rem;
-        }
-
-        .footer {
-            text-align: center;
-            color: #aaa;
-            font-size: 0.75rem;
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
-    <div class="card">
 
-        <div class="logo">🔐</div>
+    <div class="login-container">
 
-        <h2>Portal Login</h2>
+        <h1>Secure Portal</h1>
 
         <p class="subtitle">
-            Secure Authentication System
+            Sign in to access your account
         </p>
 
-        {% if message %}
-        <div class="alert {{ status_class }}">
-            {{ message }}
-        </div>
-        {% endif %}
-
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% for category, msg in messages %}
-            <div class="alert {{ category }}">
-                {{ msg }}
-            </div>
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">
+                    {{ message }}
+                </div>
             {% endfor %}
         {% endwith %}
 
-        <!-- nosemgrep: python.django.security.django-no-csrf-token.django-no-csrf-token -->
-        <form method="POST" action="/">
+        <form method="POST" action="{{ url_for('index') }}">
 
-            <div class="form-group">
-                <label for="username">Nama Pengguna</label>
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
 
-                <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    placeholder="Masukkan username"
-                    autocomplete="username"
-                    required
-                />
-            </div>
+            <label for="username">Username</label>
 
-            <div class="form-group">
-                <label for="password">Kata Sandi</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter your username"
+                autocomplete="username"
+                required
+            >
 
-                <div class="password-wrapper">
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Masukkan password"
-                        autocomplete="current-password"
-                        required
-                    />
+            <label for="password">Password</label>
 
-                    <button
-                        type="button"
-                        class="toggle-password"
-                        onclick="togglePassword()"
-                    >
-                        Show
-                    </button>
-                </div>
-            </div>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                autocomplete="current-password"
+                required
+            >
 
-            <div class="options">
-                <label class="remember">
-                    <input type="checkbox" name="remember">
-                    Remember me
-                </label>
-            </div>
-
-            <button type="submit" class="login-button">
-                Masuk
+            <button type="submit">
+                Login
             </button>
 
         </form>
 
         <div class="register-link">
-            Belum punya akun?
-            <a href="{{ url_for('register') }}">Daftar di sini</a>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="footer">
-            DevSecOps Pipeline &copy; 2026
-            <br>
-            Secure Access Portal
+            Don't have an account?
+            <a href="{{ url_for('register') }}">Register</a>
         </div>
 
     </div>
-
-    <script>
-        function togglePassword() {
-            const password = document.getElementById("password");
-            const button = document.querySelector(".toggle-password");
-
-            if (password.type === "password") {
-                password.type = "text";
-                button.textContent = "Hide";
-            } else {
-                password.type = "password";
-                button.textContent = "Show";
-            }
-        }
-    </script>
 
 </body>
 </html>
