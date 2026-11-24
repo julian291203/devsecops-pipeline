@@ -124,10 +124,10 @@ def dashboard():
     )
 
 
-@app.route("/logout")
+@app.route("/logout", methods=["POST"])
 def logout():
-    """Mengakhiri sesi pengguna."""
     session.clear()
+    flash("Kamu berhasil logout.", "success")
     return redirect(url_for("index"))
 
 

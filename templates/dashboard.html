@@ -4,10 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard | Secure Portal</title>
 
     <style>
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -33,6 +35,7 @@
         }
 
         .logout {
+            display: inline-block;
             color: white;
             text-decoration: none;
             border: 1px solid rgba(255,255,255,0.7);
@@ -96,22 +99,35 @@
         }
 
         @media (max-width: 600px) {
-            header { padding: 1rem 5%; }
-            .welcome-card { padding: 1.5rem; }
-            main { margin-top: 25px; }
+            header {
+                padding: 1rem 5%;
+            }
+
+            .welcome-card {
+                padding: 1.5rem;
+            }
+
+            main {
+                margin-top: 25px;
+            }
         }
     </style>
 </head>
 
 <body>
+
     <header>
         <h2>🔐 Secure Portal</h2>
-        <a class="logout" href="{{ url_for('logout') }}">Logout</a>
+
+        <a class="logout" href="{{ url_for('logout') }}">
+            Logout
+        </a>
     </header>
 
     <main>
         <section class="welcome-card">
             <h1>Selamat Datang, {{ session.get('username') }}!</h1>
+
             <p>
                 Kamu berhasil masuk ke sistem autentikasi.
                 Halaman ini hanya dapat diakses oleh pengguna
@@ -131,5 +147,6 @@
         <br>
         Secure Authentication Dashboard
     </footer>
+
 </body>
 </html>
