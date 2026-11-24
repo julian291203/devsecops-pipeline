@@ -7,9 +7,11 @@ from flask import (
     redirect, url_for, session, flash
 )
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_wtf.csrf import CSRFProtect
 
 app = Flask(__name__)
 app.secret_key = "devsecops-secret-key-change-this"
+csrf = CSRFProtect(app)
 
 
 def init_db():
