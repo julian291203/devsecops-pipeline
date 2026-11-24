@@ -4,45 +4,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Daftar Akun</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #e8f0ff, #f4f6f8);
+        }
+
+        .card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin: 0 0 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group { margin-bottom: 1.2rem; }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: border 0.2s;
+        }
+
+        input:focus { border-color: #0066cc; }
+
+        button {
+            width: 100%;
+            padding: 0.85rem;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover { background: #0052a3; }
+
+        .alert {
+            padding: 0.8rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .success { background: #d4edda; color: #155724; }
+        .danger { background: #f8d7da; color: #721c24; }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        a {
+            color: #0066cc;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        a:hover { text-decoration: underline; }
+
+        .footer {
+            border-top: 1px solid #eee;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            text-align: center;
+            color: #aaa;
+            font-size: 0.75rem;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Create Account</h1>
+    <div class="card">
+        <div class="logo">📝</div>
+        <h2>Buat Akun</h2>
+        <p class="subtitle">Create Your Secure Account</p>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% for category, message in messages %}
-            <p class="{{ category }}">{{ message }}</p>
-        {% endfor %}
-    {% endwith %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
 
-    <!-- nosemgrep: python.django.security.django-no-csrf-token -->
-    <form method="POST">
-        <input
-            type="hidden"
-            name="csrf_token"
-            value="{{ csrf_token() }}"
-        >
+        <form method="POST" action="{{ url_for('register') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-        <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            required
-        >
+            <div class="form-group">
+                <label for="username">Nama Pengguna</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Buat username"
+                    autocomplete="username"
+                    required
+                >
+            </div>
 
-        <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-        >
+            <div class="form-group">
+                <label for="password">Kata Sandi</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Minimal 8 karakter"
+                    autocomplete="new-password"
+                    minlength="8"
+                    required
+                >
+            </div>
 
-        <button type="submit">Register</button>
-    </form>
+            <button type="submit">Daftar Sekarang</button>
+        </form>
 
-    <p>
-        Already have an account?
-        <a href="/">Back to Login</a>
-    </p>
+        <div class="login-link">
+            Sudah punya akun?
+            <a href="{{ url_for('index') }}">Login di sini</a>
+        </div>
+
+        <div class="footer">
+            DevSecOps Pipeline &copy; 2026
+            <br>
+            Secure Account Registration
+        </div>
+    </div>
 </body>
 </html>
