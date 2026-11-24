@@ -34,18 +34,14 @@
             font-size: 1.2rem;
         }
 
-        .logout-form {
-            margin: 0;
-        }
-
         .logout {
+            display: inline-block;
             color: white;
+            text-decoration: none;
             border: 1px solid rgba(255,255,255,0.7);
             padding: 0.55rem 1rem;
             border-radius: 6px;
             font-size: 0.9rem;
-            background: transparent;
-            cursor: pointer;
             transition: background 0.2s;
         }
 
@@ -123,22 +119,12 @@
     <header>
         <h2>🔐 Secure Portal</h2>
 
-        <form class="logout-form"
-              method="POST"
-              action="{{ url_for('logout') }}">
-
-            <input type="hidden"
-                   name="csrf_token"
-                   value="{{ csrf_token() }}">
-
-            <button class="logout" type="submit">
-                Logout
-            </button>
-        </form>
+        <a class="logout" href="{{ url_for('logout') }}">
+            Logout
+        </a>
     </header>
 
     <main>
-
         <section class="welcome-card">
             <h1>Selamat Datang, {{ session.get('username') }}!</h1>
 
@@ -151,14 +137,9 @@
 
         <section class="status-card">
             <h3>System Status</h3>
-
-            <p class="status">
-                ● Authentication Successful
-            </p>
-
+            <p class="status">● Authentication Successful</p>
             <p>Session pengguna aktif.</p>
         </section>
-
     </main>
 
     <footer>
